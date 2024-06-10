@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: bpmn-microservice
+
+server:
+  port: 8007

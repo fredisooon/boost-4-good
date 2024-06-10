@@ -1,6 +1,9 @@
 # Благотворительная платформа (TBD)
 ## Проектная мастерская лето/24.
 
+## C4 Diagram
+![img.png](docs/images/c4_diagram.png)
+
 ### Reference Documentation
 For further reference, please consider the following sections:
 
@@ -24,4 +27,3 @@ The following guides illustrate how to use some features concretely:
 * [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
 * [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
 * [Using WebSocket to build an interactive web application](https://spring.io/guides/gs/messaging-stomp-websocket/)
-
