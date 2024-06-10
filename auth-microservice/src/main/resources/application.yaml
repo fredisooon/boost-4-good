@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: auth-microservice
+
+server:
+  port: 8002

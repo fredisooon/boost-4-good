@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: core-microservice
+
+server:
+  port: 8003
