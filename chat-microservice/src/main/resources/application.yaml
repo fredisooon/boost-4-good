@@ -1,6 +1,14 @@
-spring:
-  application:
-    name: chat-microservice
-
 server:
   port: 8004
+
+spring:
+  application:
+    name: chat
+  config:
+    import: optional:file:.env[.properties]
+
+eureka:
+ client:
+   service-url:
+     defaultZone: ${EUREKA_URL}
+

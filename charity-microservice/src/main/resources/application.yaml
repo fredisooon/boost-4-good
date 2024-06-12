@@ -1,6 +1,16 @@
-spring:
-  application:
-    name: api-gateway
-
 server:
   port: 8005
+
+spring:
+  application:
+    name: charity
+  config:
+    import: optional:file:.env[.properties]
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL}
+
+
+

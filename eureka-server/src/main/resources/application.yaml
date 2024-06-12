@@ -1,6 +1,18 @@
+server:
+  port: 9090
+
 spring:
   application:
     name: eureka-server
+  config:
+    import: optional:file:.env[.properties]
 
-server:
-  port: 8002
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: ${EUREKA_URL}
+
+
+

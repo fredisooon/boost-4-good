@@ -1,16 +1,16 @@
 package fyodor.dev.coremicroservice.domain.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
 @Entity
-public class User {
+@Table(name = "users")
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -18,4 +18,10 @@ public class User {
     private String name;
     private String username;
     private String password;
+
+    @Column(name = "role")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "users_roles")
+    @Enumerated(value = EnumType.STRING)
+    private Set<Role> roles;
 }
