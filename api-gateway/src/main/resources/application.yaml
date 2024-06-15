@@ -14,9 +14,34 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
+      routes:
+        - id: auth-rote # AUTH MICROSERVICE ROUTING
+          uri: lb://auth
+          predicates:
+            - Path=/api/v1/auth/**
+            - Method=POST,GET
+        - id: bpmn-route  # BPMN MICROSERVICE ROUTING
+          uri: lb://bpmn
+          predicates:
+            - Path=/api/v1/bpmn/**
+            - Method=POST,GET
+        - id: charity-rote # CHARITY MICROSERVICE ROUTING
+          uri: lb://charity
+          predicates:
+            - Path=/api/v1/charity/**
+            - Method=POST,GET
+        - id: chat-rote # CHAT MICROSERVICE ROUTING
+          uri: lb://chat
+          predicates:
+            - Path=/api/v1/chat/**
+            - Method=POST,GET
+        - id: core-rote # CORE MICROSERVICE ROUTING
+          uri: lb://core
+          predicates:
+            - Path=/api/v1/core/**
+            - Method=POST,GET,DELETE,PUT
 
 eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_URL}
-

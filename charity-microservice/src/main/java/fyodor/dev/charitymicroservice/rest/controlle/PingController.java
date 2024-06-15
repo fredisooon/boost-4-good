@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/charity")
 public class PingController {
 
     private final AtomicInteger counter = new AtomicInteger();

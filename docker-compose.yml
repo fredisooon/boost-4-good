@@ -1,17 +1,112 @@
-version: "3"
+version: "3.8"
+volumes:
+  postgres_data:
+
 services:
-  core-service:
+
+  auth-microservice:
+    container_name: auth-microservice
     build:
-      context: .
+      context: ./
+      dockerfile: auth-microservice/Dockerfile
+    image: auth-microservice
     ports:
-      - "8080:8080"
-    depends_on:
-      - db
-  db:
-    image: postgres:14.2
+      - "8002:8002"
+    networks:
+      - boost-network
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: my_database
+      - JAVA_OPTS=-Xmx512M
+      - JWT_SECRET=ii3z338yc4LMBBUo1xBfA4VBzfHm3DNBUHQouH5L/YZ9CtrTeXx07zO0yzEHLXT7ahGyzy7++ZiKr2X2F8SYg7wbo9vkL7U+7ovhqOF9YanUzgYwtVKcYvze4m1bASubJIr+h3Icnw0W8uuRIO/iV1Q6+BGN9i3FrRlO/yCLdPg=
+      - USER_SERVICE_LINK=http://core:8003/api/v1/core/user
+      - EUREKA_URL=http://eureka-server:9090/eureka
+    depends_on:
+      - core-microservice
+      - eureka-server
+
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: ./
+      dockerfile: api-gateway/Dockerfile
+    image: api-gateway
     ports:
-      - "5432:5432"
+      - "8001:8001"
+    networks:
+      - boost-network
+    environment:
+      - JAVA_OPTS=-Xmx512M
+      - JWT_SECRET=ii3z338yc4LMBBUo1xBfA4VBzfHm3DNBUHQouH5L/YZ9CtrTeXx07zO0yzEHLXT7ahGyzy7++ZiKr2X2F8SYg7wbo9vkL7U+7ovhqOF9YanUzgYwtVKcYvze4m1bASubJIr+h3Icnw0W8uuRIO/iV1Q6+BGN9i3FrRlO/yCLdPg=
+      - EUREKA_URL=http://eureka-server:9090/eureka
+    depends_on:
+      - core-microservice
+      - eureka-server
+      - auth-microservice
+
+  core-microservice:
+    container_name: core-microservice
+    build:
+      context: ./
+      dockerfile: core-microservice/Dockerfile
+    image: core-microservice
+    ports:
+      - "8003:8003"
+    networks:
+      - boost-network
+    environment:
+      - JAVA_OPTS=-Xmx512M
+      - DATABASE_URL=jdbc:postgresql://postgres:5432/postgres
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=postgres-password
+      - EUREKA_URL=http://eureka-server:9090/eureka
+    depends_on:
+      - postgres
+      - eureka-server
+
+  postgres:
+    container_name: postgres
+    image: postgres:16.3
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres-password
+      - POSTGRES_DB=postgres
+    ports:
+      - '5432:5432'
+    networks:
+      - boost-network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  eureka-server:
+    container_name: eureka-server
+    build:
+      context: ./
+      dockerfile: eureka-server/Dockerfile
+    image: eureka-server
+    restart: always
+    ports:
+      - "9090:9090"
+    environment:
+      - EUREKA_URL=http://eureka-server:9090/eureka
+    networks:
+      - boost-network
+
+#  core-service:
+#    build:
+#      context: .
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - db
+#  db:
+#    image: postgres:14.2
+#    environment:
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+#      POSTGRES_DB: my_database
+#    ports:
+#      - "5432:5432"
+
+networks:
+  boost-network:
+    driver: bridge

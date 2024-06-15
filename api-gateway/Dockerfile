@@ -5,7 +5,7 @@ WORKDIR /app
 COPY pom.xml .
 RUN mvn -N install
 
-COPY /core-microservice/. .
+COPY /api-gateway/. .
 
 RUN mvn install -DskipTests
 
