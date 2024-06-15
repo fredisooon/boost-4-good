@@ -5,7 +5,7 @@ WORKDIR /app
 COPY pom.xml .
 RUN mvn -N install
 
-COPY /core-microservice/. .
+COPY /eureka-server/. .
 
 RUN mvn install -DskipTests
 

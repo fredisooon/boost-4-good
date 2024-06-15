@@ -1,4 +1,4 @@
-package fyodor.dev.coremicroservice.domain.user;
+package fyodor.dev.authmicroservice.domain.user;
 
 public enum Role {
     ROLE_USER,

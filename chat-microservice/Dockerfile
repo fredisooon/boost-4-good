@@ -5,7 +5,7 @@ WORKDIR /app
 COPY pom.xml .
 RUN mvn -N install
 
-COPY /core-microservice/. .
+COPY /chat-microservice/. .
 
 RUN mvn install -DskipTests
 

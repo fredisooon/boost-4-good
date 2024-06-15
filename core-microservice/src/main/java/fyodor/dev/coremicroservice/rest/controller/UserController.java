@@ -1,8 +1,10 @@
 package fyodor.dev.coremicroservice.rest.controller;
 
+import fyodor.dev.coremicroservice.domain.exception.ResourceNotFoundException;
 import fyodor.dev.coremicroservice.domain.exception.UserAlreadyExistsException;
 import fyodor.dev.coremicroservice.domain.user.User;
 import fyodor.dev.coremicroservice.rest.dto.CreateUserRequest;
+import fyodor.dev.coremicroservice.rest.dto.JwtRequest;
 import fyodor.dev.coremicroservice.rest.dto.UserDto;
 import fyodor.dev.coremicroservice.rest.mapper.UserMapper;
 import fyodor.dev.coremicroservice.service.UserService;
@@ -15,8 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 
 @Slf4j
 @RestController
@@ -26,6 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class UserController {
 
     private final UserService userService;
+    private final UserMapper userMapper;
 
     @Operation(summary = "Создание пользователя", description = "Создает аккаунт пользователя в системе")
     @PostMapping
@@ -38,6 +39,28 @@ public class UserController {
             return ResponseEntity.ok().body(UserMapper.INSTANCE.toDto(createdUser));
         } catch (UserAlreadyExistsException ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+    }
+
+    @Operation(summary = "Получение пользователя???", description = "Получает сущность пользователя???")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<UserDto> getUser(@Parameter(description = "123") @RequestBody JwtRequest jwtRequest) {
+        try {
+            User user = userService.getByUsername(jwtRequest.getUsername());
+            return ResponseEntity.ok().body(userMapper.toDto(user));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<UserDto> getUserByUsername(@Parameter(description = "username/e-mail")
+                                                         @RequestParam(value = "username") String username) {
+        try {
+            User user = userService.getByUsername(username);
+            return ResponseEntity.ok().body(userMapper.toDto(user));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 
