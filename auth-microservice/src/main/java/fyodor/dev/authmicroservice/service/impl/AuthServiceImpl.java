@@ -4,9 +4,9 @@ import fyodor.dev.authmicroservice.domain.exception.AccessDeniedException;
 import fyodor.dev.authmicroservice.domain.exception.ResourceNotFoundException;
 import fyodor.dev.authmicroservice.domain.user.Role;
 import fyodor.dev.authmicroservice.rest.UserDto;
-import fyodor.dev.authmicroservice.rest.dto.JwtRequest;
-import fyodor.dev.authmicroservice.rest.dto.JwtResponse;
-import fyodor.dev.authmicroservice.rest.dto.RegisteredUser;
+import fyodor.dev.authmicroservice.rest.dto.auth.JwtRequest;
+import fyodor.dev.authmicroservice.rest.dto.auth.JwtResponse;
+import fyodor.dev.authmicroservice.rest.dto.auth.RegisteredUser;
 import fyodor.dev.authmicroservice.rest.security.JwtTokenProvider;
 import fyodor.dev.authmicroservice.service.AuthService;
 import fyodor.dev.authmicroservice.service.properties.LinkProperties;
@@ -22,7 +22,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
 
 
 @Service

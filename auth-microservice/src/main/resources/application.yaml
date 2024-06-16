@@ -23,3 +23,14 @@ security:
     secret: ${JWT_SECRET}
     access: 1
     refresh: 30
+
+#openapi:
+#  service:
+#    title: Auth-microservice docs
+#    version: 1.0.0
+#    url: http://localhost:8001
+#springdoc:
+#  api-docs:
+#    path: /auth/v1/api-docs
+#  swagger-ui:
+#    path: /api/v1/auth/swagger-ui.html

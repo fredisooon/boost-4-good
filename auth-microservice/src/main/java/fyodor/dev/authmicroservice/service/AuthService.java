@@ -2,9 +2,9 @@ package fyodor.dev.authmicroservice.service;
 
 
 import fyodor.dev.authmicroservice.rest.UserDto;
-import fyodor.dev.authmicroservice.rest.dto.JwtRequest;
-import fyodor.dev.authmicroservice.rest.dto.JwtResponse;
-import fyodor.dev.authmicroservice.rest.dto.RegisteredUser;
+import fyodor.dev.authmicroservice.rest.dto.auth.JwtRequest;
+import fyodor.dev.authmicroservice.rest.dto.auth.JwtResponse;
+import fyodor.dev.authmicroservice.rest.dto.auth.RegisteredUser;
 
 public interface AuthService {
 

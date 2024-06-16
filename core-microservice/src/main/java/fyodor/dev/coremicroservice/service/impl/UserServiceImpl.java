@@ -2,8 +2,12 @@ package fyodor.dev.coremicroservice.service.impl;
 
 import fyodor.dev.coremicroservice.domain.exception.ResourceNotFoundException;
 import fyodor.dev.coremicroservice.domain.exception.UserAlreadyExistsException;
+import fyodor.dev.coremicroservice.domain.user.Image;
 import fyodor.dev.coremicroservice.domain.user.User;
+import fyodor.dev.coremicroservice.repository.ImageRepository;
 import fyodor.dev.coremicroservice.repository.UserRepository;
+import fyodor.dev.coremicroservice.rest.dto.UserImageDto;
+import fyodor.dev.coremicroservice.service.ImageService;
 import fyodor.dev.coremicroservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,8 @@ import static java.lang.String.format;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final ImageRepository imageRepository;
+    private final ImageService imageService;
 
     @Override
     public User getById(final UUID id) {
@@ -52,5 +58,21 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public void delete(final UUID id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional()
+    public void uploadImage(UUID userId, UserImageDto imageDto) {
+        String minioLink = imageService.upload(imageDto);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException(format("User with id '%s' not found", userId)));
+
+        Image image = new Image();
+        image.setImageLink(minioLink);
+        image.setUserId(user);
+        imageRepository.save(image);
+
+        user.setImage(image);
+        userRepository.save(user);
     }
 }

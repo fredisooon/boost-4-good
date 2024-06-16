@@ -4,8 +4,15 @@
 ## C4 Diagram
 ![img.png](docs/images/c4_diagram.png)
 
-### Reference Documentation
-For further reference, please consider the following sections:
+### API Documentation (Swagger)
+В процессе разработки доступна документация REST API бэкенда - Swagger UI.
+Доступ к swagger осуществляется к каждому микросервису отдельно по следующему принципу:
+    
+    <host>:<port>/swagger-ui/index.html
+где host - адрес хоста, port - порт на котором работает микросервис
+
+    Пример: http://localhost:8002/swagger-ui/index.html
+
 
 * [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
 * [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/3.3.0/maven-plugin/reference/html/)
