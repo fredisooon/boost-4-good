@@ -1,4 +1,4 @@
-package fyodor.dev.authmicroservice.rest.dto;
+package fyodor.dev.authmicroservice.rest.dto.auth;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

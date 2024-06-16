@@ -23,4 +23,5 @@ public class UserDto {
     private String password;
     @Schema(description = "Роль пользователя")
     private Set<Role> roles;
+
 }

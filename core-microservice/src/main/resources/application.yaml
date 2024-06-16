@@ -22,6 +22,12 @@ spring:
 #    password: postgres
 #    locations: classpath:db/migration
 
+minio:
+  bucket: user-images #${MINIO_BUCKET}
+  url: http://localhost:9000 #${MINIO_URL}
+  accessKey: minioadmin #${MINIO_ACCESS_KEY}
+  secretKey: minioadmin ${MINIO_SECRET_KEY}
+
 eureka:
   client:
     service-url:

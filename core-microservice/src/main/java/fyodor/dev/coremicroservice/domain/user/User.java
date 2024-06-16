@@ -24,4 +24,8 @@ public class User implements Serializable {
     @CollectionTable(name = "users_roles")
     @Enumerated(value = EnumType.STRING)
     private Set<Role> roles;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "image_id")
+    private Image image;
 }

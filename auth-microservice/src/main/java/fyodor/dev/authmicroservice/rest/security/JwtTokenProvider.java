@@ -4,7 +4,7 @@ package fyodor.dev.authmicroservice.rest.security;
 import fyodor.dev.authmicroservice.domain.exception.AccessDeniedException;
 import fyodor.dev.authmicroservice.domain.user.Role;
 import fyodor.dev.authmicroservice.rest.UserDto;
-import fyodor.dev.authmicroservice.rest.dto.JwtResponse;
+import fyodor.dev.authmicroservice.rest.dto.auth.JwtResponse;
 import fyodor.dev.authmicroservice.service.properties.JwtProperties;
 import fyodor.dev.authmicroservice.service.properties.LinkProperties;
 import io.jsonwebtoken.Claims;
