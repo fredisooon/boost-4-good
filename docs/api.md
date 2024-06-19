@@ -71,11 +71,9 @@ POST /charity-organization
 ``` 
 POST "<base_url>/v1/charity-organization" 
 ```
-
-Ответ
+Тело запроса:
 ```
 {
-    "charity-organization":[
         {
             "organizationID": 1,
             "nameOfOrganization": "Название организации 1",
@@ -83,19 +81,20 @@ POST "<base_url>/v1/charity-organization"
             "category": "Категория организации 1",
             "numberOfDonators": 3000,
             "moneyCollected": 3500000
-        },
+        }
+}
+```
+Ответ
+```
+{
         {
-            "organizationID": 2,
-            "nameOfOrganization": "Название организации 2",
-            "inn": "ИНН организации 2",
-            "category": "Категория организации 2",
-            "numberOfDonators": 4000,
-            "moneyCollected": 2500000
-
-        },
-    ...
-    ]
-    
+            "organizationID": 1,
+            "nameOfOrganization": "Название организации 1",
+            "inn": "ИНН организации 1",
+            "category": "Категория организации 1",
+            "numberOfDonators": 3000,
+            "moneyCollected": 3500000
+        }   
 }
 ```
 Параметры ответа:
@@ -112,9 +111,9 @@ POST "<base_url>/v1/charity-organization"
 |Код|Описание|
 |:-|:-|
 |200|ОК|
-|204|В ответе нет контента|
-|404|Ресурс не найден|
-|500|Ошибка на сервере|
+|401|Необходима авторизация|
+|403|Нет прав доступа|
+
 
 
 ### ** Получение информации о пользователе ** ###
