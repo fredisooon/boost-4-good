@@ -15,7 +15,61 @@ GET /charity-organization
 
 Пример запроса: 
 ``` 
-GET "<base_url>/charity-organization?id=3&name=charityName&inn=123456789&category=children&limit=3&sort=asc" 
+GET "<base_url>/v1/charity-organization?id=3&name=charityName&inn=123456789&category=children&limit=3&sort=asc" 
+```
+
+Ответ
+```
+{
+    "charity-organization":[
+        {
+            "organizationID": 1,
+            "nameOfOrganization": "Название организации 1",
+            "inn": "ИНН организации 1",
+            "category": "Категория организации 1",
+            "numberOfDonators": 3000,
+            "moneyCollected": 3500000
+        },
+        {
+            "organizationID": 2,
+            "nameOfOrganization": "Название организации 2",
+            "inn": "ИНН организации 2",
+            "category": "Категория организации 2",
+            "numberOfDonators": 4000,
+            "moneyCollected": 2500000
+
+        },
+    ...
+    ]
+    
+}
+```
+Параметры ответа:
+|Параметр|Описание|Тип данных|
+|:-|:-|:-|
+|organizationID|Номер благотворительной организации|integer|
+|nameOfOrganization|Название благотворительной организации|string|
+|inn|ИНН благотворительной организации|string|
+|category|Категория благотворительной организации|string|
+|numberOfDonators|Количество пользователей, поддерживающих благотворительную организацию|integer|
+|moneyCollected|Количество собранных благотворительной организацией денег|money|
+
+Коды ответа:
+|Код|Описание|
+|:-|:-|
+|200|ОК|
+|204|В ответе нет контента|
+|404|Ресурс не найден|
+|500|Ошибка на сервере|
+
+
+### ** Добавление благотворительной организации ** ###
+
+POST /charity-organization
+
+Пример запроса: 
+``` 
+POST "<base_url>/v1/charity-organization" 
 ```
 
 Ответ
@@ -74,7 +128,7 @@ GET /user/{userID}
 
 Пример запроса: 
 ``` 
-GET "<base_url>/user/3" 
+GET "<base_url>/v1/user/3" 
 ```
 
 Ответ
