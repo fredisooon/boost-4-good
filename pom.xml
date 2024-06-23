@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
-	<groupId>ru.summer.workshop</groupId>
-	<artifactId>tdb-title</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>tdb-title</name>
-	<description>tdb-title</description>
-
-	<properties>
-		<java.version>17</java.version>
-	</properties>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -20,64 +11,89 @@
 		<relativePath/>
 	</parent>
 
+	<groupId>ru.summer.workshop</groupId>
+	<artifactId>boost-4-good</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>Boost4Good</name>
+	<url>http://boost4good.com</url>
+
+	<!--Модули проекта (микросервисы)-->
+	<modules>
+		<module>api-gateway</module>
+		<module>eureka-server</module>
+		<module>auth-microservice</module>
+		<module>core-microservice</module>
+		<module>chat-microservice</module>
+		<module>charity-microservice</module>
+		<module>bpmn-microservice</module>
+	</modules>
+
+	<properties>
+		<java.version>17</java.version>
+		<spring.boot.version>3.3.0</spring.boot.version>
+		<spring.cloud.version>2023.0.2</spring.cloud.version>
+		<lombook.version>1.18.30</lombook.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<mapstruct.version>1.5.5.Final</mapstruct.version>
+	</properties>
+
 	<dependencies>
-
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.4.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-websocket</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${mapstruct.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>${mapstruct.version}</version>
+			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
 	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springdoc</groupId>
+				<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+				<version>2.4.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring.boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring.cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.2.5</version>
 				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
+					<skipTests>true</skipTests>
 				</configuration>
 			</plugin>
 		</plugins>

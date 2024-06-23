@@ -1,0 +1,13 @@
+server:
+  port: 8006
+
+spring:
+  application:
+    name: bpmn
+  config:
+    import: optional:file:.env[.properties]
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL}

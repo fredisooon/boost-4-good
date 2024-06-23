@@ -1,0 +1,37 @@
+server:
+  port: 8003
+
+spring:
+  application:
+    name: core
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create-drop
+#  flyway:
+#    url: jdbc:postgresql://localhost:5432/postgres
+#    user: postgres
+#    password: postgres
+#    locations: classpath:db/migration
+
+minio:
+  bucket: user-images #${MINIO_BUCKET}
+  url: http://localhost:9000 #${MINIO_URL}
+  accessKey: minioadmin #${MINIO_ACCESS_KEY}
+  secretKey: minioadmin ${MINIO_SECRET_KEY}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL}
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+    prefer-ip-address: true
