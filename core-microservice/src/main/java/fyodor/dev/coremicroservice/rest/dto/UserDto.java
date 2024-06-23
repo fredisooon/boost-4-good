@@ -15,12 +15,16 @@ public class UserDto {
 
     @Schema(description = "Идентификатор")
     private UUID id;
+
     @Schema(description = "Имя")
     private String name;
+
     @Schema(description = "Логин/Mail")
     private String username;
+
     @Schema(description = "Пароль")
     private String password;
+
     @Schema(description = "Роль пользователя")
     private Set<Role> roles;
 
