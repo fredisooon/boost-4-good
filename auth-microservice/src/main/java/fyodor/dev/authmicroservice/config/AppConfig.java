@@ -9,7 +9,6 @@ import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -28,7 +27,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class ApplicationConfig {
+public class AppConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -69,10 +68,14 @@ public class ApplicationConfig {
                             response.getWriter().write("Forbidden.");
                         })
                 )
+
+                /**
+                 * localhost:8001/api/v1/core/crud/user/validate - block. валидация перед входом
+                 */
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                        .requestMatchers("/**").permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/api/v1/core/**").permitAll()
+                        .requestMatchers("/api/v1/crud/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )

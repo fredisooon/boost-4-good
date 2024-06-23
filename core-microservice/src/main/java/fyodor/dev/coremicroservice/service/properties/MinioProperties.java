@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "minio")
 public class MinioProperties {
 
-    private String bucket;
+    private String profileBucket;
+    private String postBucket;
+    private String messageBucket;
     private String url;
     private String accessKey;
     private String secretKey;

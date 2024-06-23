@@ -23,10 +23,12 @@ spring:
 #    locations: classpath:db/migration
 
 minio:
-  bucket: user-images #${MINIO_BUCKET}
-  url: http://localhost:9000 #${MINIO_URL}
-  accessKey: minioadmin #${MINIO_ACCESS_KEY}
-  secretKey: minioadmin ${MINIO_SECRET_KEY}
+  url: ${MINIO_URL}
+  profileBucket: ${MINIO_BUCKET_PROFILE}
+  postBucket: ${MINIO_BUCKET_POST}
+  messageBucket: ${MINIO_BUCKET_MESSAGE}
+  accessKey: ${MINIO_ACCESS_KEY}
+  secretKey: ${MINIO_SECRET_KEY}
 
 eureka:
   client:

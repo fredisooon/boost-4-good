@@ -47,7 +47,7 @@ public class AuthServiceImpl implements AuthService {
 
         HttpEntity<JwtRequest> request = new HttpEntity<>(loginRequest);
         ResponseEntity<UserDto> response = restTemplate
-                .exchange(linkProperties.getUserServiceLink() + "/login",
+                .exchange(linkProperties.getUserServiceLink() + "/validate",
                         HttpMethod.POST,
                         request,
                         UserDto.class);

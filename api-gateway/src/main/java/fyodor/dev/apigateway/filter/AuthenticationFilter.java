@@ -43,8 +43,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 
                     request = exchange.getRequest()
                             .mutate()
-                            // TODO [15.06.2024]: аналогично передавать другие данные
-                            .header("loggedInUser", jwtUtil.extractEmail(authHeader))
+                            .header("X-User-login", jwtUtil.extractEmail(authHeader))
                             .build();
                 } catch (Exception e) {
                     throw new InvalidAccessTokenException("Invalid Access Token");
