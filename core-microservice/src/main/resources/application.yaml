@@ -34,6 +34,6 @@ eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_URL}
-  instance:
-    instance-id: ${spring.application.name}:${random.uuid}
-    prefer-ip-address: true
+#  instance:
+#    instance-id: ${spring.application.name}:${random.uuid}
+#    prefer-ip-address: true
