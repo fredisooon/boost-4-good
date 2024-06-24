@@ -1,8 +1,24 @@
 # Благотворительная платформа (TBD)
 ## Проектная мастерская лето/24.
+## Team
+* Стружанов Фёдор (Backend)
+* Кирюшкин Кирилл (Backend)
+* Золотов Георгий (Backend)
+* Сапунов Максим (Frontend)
+* Бурмистрова Виктория (System Analyst)
 
 ## C4 Diagram
 ![img.png](docs/images/c4_diagram.png)
+
+## Use Case
+Пользователь может иметь роли Создателя и Читателя.
+_Создатель - пользователь, который может создавать посты_
+_Читатель - пользователь, который просматривает посты_ 
+
+![useCase.png](docs/images/useCase.png)
+
+## ER-diagram
+![ER_diagram.png](docs/images/ER_diagram.png)
 
 ### API Documentation (Swagger)
 В процессе разработки доступна документация REST API бэкенда - Swagger UI.
@@ -14,6 +30,7 @@
     Пример: http://localhost:8002/swagger-ui/index.html
 
 
+### Some documentation
 * [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
 * [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/3.3.0/maven-plugin/reference/html/)
 * [Create an OCI image](https://docs.spring.io/spring-boot/docs/3.3.0/maven-plugin/reference/html/#build-image)
