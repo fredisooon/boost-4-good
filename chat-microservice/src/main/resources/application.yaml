@@ -6,9 +6,13 @@ spring:
     name: chat
   config:
     import: optional:file:.env[.properties]
+  rabbitmq:
+    host: ${SPRING_RABBITMQ_HOST}
+    port: ${SPRING_RABBITMQ_PORT}
+    username: ${SPRING_RABBITMQ_USERNAME}
+    password: ${SPRING_RABBITMQ_PASSWORD}
 
 eureka:
- client:
-   service-url:
-     defaultZone: ${EUREKA_URL}
-
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL}
