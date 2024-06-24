@@ -35,6 +35,29 @@ services:
     networks:
       - boost-network
 
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      - "61613:61613"
+    volumes:
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+    command: >
+      /bin/bash -c "
+      rabbitmq-plugins enable rabbitmq_management;
+      rabbitmq-plugins enable rabbitmq_stomp;
+      rabbitmq-plugins enable rabbitmq_web_stomp;
+      rabbitmq-plugins enable rabbitmq_web_mqtt;
+      rabbitmq-server"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    networks:
+      - boost-network
+
   eureka-server:
     container_name: eureka-server
     build:
@@ -71,10 +94,36 @@ services:
       - MINIO_BUCKET_MESSAGE=message-images
       - MINIO_ACCESS_KEY=minioadmin
       - MINIO_SECRET_KEY=minioadmin
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=guest
+      - SPRING_RABBITMQ_PASSWORD=guest
     depends_on:
       - postgres
       - eureka-server
       - minio
+      - rabbitmq
+
+  chat-microservice:
+    container_name: chat-microservice
+    build:
+      context: ./
+      dockerfile: chat-microservice/Dockerfile
+    image: chat-microservice
+    ports:
+      - "8004:8004"
+    networks:
+      - boost-network
+    environment:
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=guest
+      - SPRING_RABBITMQ_PASSWORD=guest
+      - EUREKA_URL=http://eureka-server:8009/eureka
+    depends_on:
+      - rabbitmq
+      - core-microservice
+      - eureka-server
 
   auth-microservice:
     container_name: auth-microservice
