@@ -22,7 +22,6 @@ public class UserFacadeService {
 
     private final UserService userService;
     private final UserMapper userMapper;
-    private final UserRepository userRepository;
 
     public UserDto createUser(CreateUserRequest createUserRequest) {
         User user = userMapper.toEntity(createUserRequest);
@@ -32,6 +31,12 @@ public class UserFacadeService {
 
     public UserDto getUserByJwtRequest(JwtRequest jwtRequest) {
         User user = userService.getByUsername(jwtRequest.getUsername())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return userMapper.toDto(user);
+    }
+
+    public UserDto getUserById(UUID id) {
+        User user = userService.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         return userMapper.toDto(user);
     }
