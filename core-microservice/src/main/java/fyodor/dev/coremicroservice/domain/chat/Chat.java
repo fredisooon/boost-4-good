@@ -1,15 +1,8 @@
 package fyodor.dev.coremicroservice.domain.chat;
 
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import fyodor.dev.coremicroservice.domain.user.User;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -18,18 +11,20 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "chats", uniqueConstraints = {@UniqueConstraint(columnNames = {"creator_id", "reader_id"})})
+@Table(name = "chats")
 public class Chat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "creator_id", nullable = false)
-    private UUID creatorId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creator_id", nullable = false)
+    private User creator;
 
-    @Column(name = "reader_id", nullable = false)
-    private UUID readerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reader_id", nullable = false)
+    private User reader;
 
     @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> messages = new ArrayList<>();
