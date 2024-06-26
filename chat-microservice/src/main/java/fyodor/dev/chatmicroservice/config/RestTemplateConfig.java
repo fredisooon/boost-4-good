@@ -1,20 +1,14 @@
-package fyodor.dev.chatmicroservice.configuration;
+package fyodor.dev.chatmicroservice.config;
 
-import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class AppConfig {
+public class RestTemplateConfig {
 
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
-    }
-
-    @Bean
-    public Queue chatQueue() {
-        return new Queue("chat-queue");
     }
 }

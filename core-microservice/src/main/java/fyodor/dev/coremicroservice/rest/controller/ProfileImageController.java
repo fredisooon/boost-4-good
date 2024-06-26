@@ -5,7 +5,9 @@ import fyodor.dev.coremicroservice.service.ProfileImageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.core.io.InputStreamResource;
@@ -18,11 +20,12 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/api/v1/core/crud/profile/image")
 @Tag(name="ProfileImageController", description="Взаимодействие с картинкой пользователя")
 public class ProfileImageController {
 
-    private final ProfileImageService imageService;
+    ProfileImageService imageService;
 
     @PostMapping
     @Operation(summary = "Загрузка картинки пользователя", description = "Загрузка картикни пользователя в профиль")

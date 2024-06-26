@@ -2,7 +2,9 @@ package fyodor.dev.coremicroservice.rest.controller;
 
 import fyodor.dev.coremicroservice.domain.chat.Message;
 import fyodor.dev.coremicroservice.service.MessageService;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,10 +17,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/core/crud/messages")
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public class MessageController {
 
-    private final MessageService messageService;
+    MessageService messageService;
 
     @PostMapping
     public ResponseEntity<Message> createMessage(@RequestBody Message message) {

@@ -1,14 +1,16 @@
-package fyodor.dev.chatmicroservice.rest.dto;
+package fyodor.dev.chatmicroservice.ws.dto;
 
 
-import lombok.AccessLevel;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.UUID;
 
 @Data
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 public class ChatDto {
 
     UUID id;

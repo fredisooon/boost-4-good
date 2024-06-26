@@ -7,7 +7,9 @@ import fyodor.dev.coremicroservice.service.facade.CommentFacadeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +21,11 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/core/crud/comments")
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Tag(name = "CommentController", description = "Управление комментариями у постов")
 public class CommentController {
 
-    private final CommentFacadeService commentFacadeService;
+    CommentFacadeService commentFacadeService;
 
     @PostMapping
     @Operation(summary = "Создание комментария", description = "Создает комментарий к посту")

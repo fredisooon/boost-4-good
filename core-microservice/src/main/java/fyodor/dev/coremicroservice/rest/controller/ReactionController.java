@@ -7,7 +7,9 @@ import fyodor.dev.coremicroservice.service.facade.ReactionFacadeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +20,12 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/api/v1/core/crud/reaction")
 @Tag(name = "ReactionController", description = "Управление реакциями у постов")
 public class ReactionController {
 
-    private final ReactionFacadeService reactionFacadeService;
+    ReactionFacadeService reactionFacadeService;
 
     @GetMapping("/{reactionId}")
     @Operation(summary = "Получение реакции", description = "Получение реакции по её UUID")
