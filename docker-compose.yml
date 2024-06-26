@@ -2,6 +2,7 @@ version: "3.8"
 volumes:
   postgres_data:
   minio-data:
+  rabbitmq_data:
 
 services:
 
@@ -31,7 +32,7 @@ services:
       - "9090:9090"
       - "9000:9000"
     volumes:
-      - minio-data:/minio
+      - minio-data:/data
     networks:
       - boost-network
 
@@ -44,6 +45,7 @@ services:
       - "15672:15672"
       - "61613:61613"
     volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
       - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
     command: >
       /bin/bash -c "
