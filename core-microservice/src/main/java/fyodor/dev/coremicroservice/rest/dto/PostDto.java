@@ -16,6 +16,7 @@ public class PostDto {
     String title;
     String content;
     UUID subscriptionId;
+    UUID creatorId;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
     List<ImageDto> images;

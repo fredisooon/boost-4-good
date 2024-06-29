@@ -5,14 +5,19 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UpdateSubscriptionRequest {
 
-    private UUID subscriptionDefinitionId;
-    private SubscriptionType type;
-    private Integer cost;
-    private Integer period;
+    UUID creatorId;
+    UUID subscriberId;
+    UUID subscriptionDefinitionId;
+    SubscriptionType type;
+    LocalDateTime startDate;
+    LocalDateTime endDate;
+    Integer cost;
+    Integer period;
 }

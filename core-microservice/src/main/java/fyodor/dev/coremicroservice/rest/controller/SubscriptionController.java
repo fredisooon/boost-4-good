@@ -36,6 +36,7 @@ public class SubscriptionController {
     SubscriptionDefinitionFacadeService subscriptionDefinitionFacadeService;
 
     @GetMapping("/api/subscriptions/check")
+    @Operation(summary = "Валидация подписки", description = "Проверка доступности подписки для читателя и создателя")
     public ResponseEntity<Boolean> checkSubscription(@Parameter(description = "UUID создателя контента")
                                                          @RequestParam UUID creatorId,
                                                      @Parameter(description = "UUID читателя (работяги)")
