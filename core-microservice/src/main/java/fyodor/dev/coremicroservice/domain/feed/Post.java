@@ -20,8 +20,7 @@ public class Post {
     @Column(nullable = false)
     private String title;
 
-    @Lob
-    @Column(nullable = false)
+    @Column(nullable = false, length = 65536)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -1,5 +1,6 @@
 package fyodor.dev.coremicroservice.domain.feed;
 
+import fyodor.dev.coremicroservice.domain.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -31,4 +32,8 @@ public class SubscriptionDefinition {
 
     @OneToMany(mappedBy = "subscriptionDefinition", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Subscription> subscriptions = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creator_id", nullable = false)
+    private User creator;
 }

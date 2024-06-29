@@ -3,6 +3,7 @@ package fyodor.dev.coremicroservice.domain.user;
 import fyodor.dev.coremicroservice.domain.feed.Comment;
 import fyodor.dev.coremicroservice.domain.feed.Reaction;
 import fyodor.dev.coremicroservice.domain.feed.Subscription;
+import fyodor.dev.coremicroservice.domain.feed.SubscriptionDefinition;
 import fyodor.dev.coremicroservice.domain.image.Image;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -34,7 +35,7 @@ public class User implements Serializable {
     private String password;
 
     @Column(name = "balance", nullable = false)
-    private BigDecimal balance = BigDecimal.ZERO;
+    private BigDecimal balance = BigDecimal.valueOf(100L);
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"))
@@ -58,6 +59,10 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "subscriber", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Subscription> subscribedSubscriptions = new HashSet<>();
+
+    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<SubscriptionDefinition> subscriptionDefinitions = new HashSet<>();
+
 
     public User() {}
 
