@@ -2,6 +2,7 @@ package fyodor.dev.coremicroservice.service.impl;
 
 import fyodor.dev.coremicroservice.domain.feed.Subscription;
 import fyodor.dev.coremicroservice.domain.feed.SubscriptionDefinition;
+import fyodor.dev.coremicroservice.domain.feed.SubscriptionLevelType;
 import fyodor.dev.coremicroservice.domain.feed.SubscriptionType;
 import fyodor.dev.coremicroservice.domain.user.User;
 import fyodor.dev.coremicroservice.repository.SubscriptionDefinitionRepository;
@@ -10,21 +11,35 @@ import fyodor.dev.coremicroservice.rest.dto.request.CreateSubscriptionRequest;
 import fyodor.dev.coremicroservice.rest.dto.request.UpdateSubscriptionRequest;
 import fyodor.dev.coremicroservice.service.SubscriptionService;
 import fyodor.dev.coremicroservice.domain.exception.ResourceNotFoundException;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SubscriptionServiceImpl implements SubscriptionService {
 
-    private final SubscriptionRepository subscriptionRepository;
-    private final SubscriptionDefinitionRepository subscriptionDefinitionRepository;
+    SubscriptionRepository subscriptionRepository;
+    SubscriptionDefinitionRepository subscriptionDefinitionRepository;
 
+    @Override
+    public boolean hasValidSubscription(UUID creatorId, UUID readerId) {
+        Subscription subscription = subscriptionRepository.findByCreatorIdAndSubscriberId(creatorId, readerId);
+        if (subscription != null) {
+            SubscriptionLevelType level = subscription.getSubscriptionDefinition().getLevel();
+            return level == SubscriptionLevelType.PRO || level == SubscriptionLevelType.PLATINUM;
+        }
+        return false;
+    }
+    
     @Transactional
     @Override
     public Subscription createSubscription(User subscriber, User creator, CreateSubscriptionRequest request) {

@@ -59,6 +59,22 @@ public class UserController {
         return ResponseEntity.ok().body(user);
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary = "Получение пользователя по его UUID",
+            description = "Получение сущности пользователя из БД по его UUID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Сущность пользователя",
+                    content = @Content(schema = @Schema(implementation = UserDto.class))),
+            @ApiResponse(responseCode = "400", description = "Ошибка при получении")
+    })
+    public ResponseEntity<UserDto> getUserById(@Parameter(description = "User uuid")
+                                                   @PathVariable UUID id) {
+        log.info("Request to get user by id: {}", id);
+        UserDto userById = userFacadeService.getUserById(id);
+        log.info("User retrieved successfully for id: {}", id);
+        return ResponseEntity.ok().body(userById);
+    }
+
     @GetMapping
     @Operation(summary = "Получение пользователя по его логину",
             description = "Получение сущности пользователя из БД по его логину (username)")
@@ -68,7 +84,7 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Ошибка при получении")
     })
     public ResponseEntity<UserDto> getUserByUsername(@Parameter(description = "username/e-mail")
-                                                     @RequestParam(value = "username") String username) {
+                                                        @RequestParam(value = "username") String username) {
         log.info("Request to get user by username: {}", username);
         UserDto user = userFacadeService.getUserByUsername(username);
         log.info("User retrieved successfully for username: {}", username);

@@ -14,7 +14,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,11 +28,22 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/core/crud/subscriptions")
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Tag(name = "SubscriptionController", description = "Управление подписками")
 public class SubscriptionController {
 
-    private final SubscriptionFacadeService subscriptionFacadeService;
-    private final SubscriptionDefinitionFacadeService subscriptionDefinitionFacadeService;
+    SubscriptionFacadeService subscriptionFacadeService;
+    SubscriptionDefinitionFacadeService subscriptionDefinitionFacadeService;
+
+    @GetMapping("/api/subscriptions/check")
+    public ResponseEntity<Boolean> checkSubscription(@Parameter(description = "UUID создателя контента")
+                                                         @RequestParam UUID creatorId,
+                                                     @Parameter(description = "UUID читателя (работяги)")
+                                                          @RequestParam UUID readerId) {
+        log.info("Check subscription availability for creator [{}] and reader [{}]", creatorId, readerId);
+        boolean hasValidSubscription = subscriptionFacadeService.hasValidSubscription(creatorId, readerId);
+        return ResponseEntity.ok(hasValidSubscription);
+    }
 
     @PostMapping
     @Operation(summary = "Создание подписки", description = "Создает подписку для пользователя")

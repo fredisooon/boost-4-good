@@ -77,7 +77,7 @@ public class UserServiceImplTest {
 
     @Test
     void whenChangeUserRole_thenRoleIsChanged() {
-        Role newRole = Role.ROLE_USER;
+        Role newRole = Role.USER;
         when(userRepository.save(any(User.class))).thenReturn(user);
 
         userService.changeUserRole(user, newRole);

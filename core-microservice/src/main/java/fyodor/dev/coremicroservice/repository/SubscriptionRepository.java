@@ -12,4 +12,6 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, UUID
 
     List<Subscription> findAllBySubscriberUsername(String username);
     List<Subscription> findAllBySubscriberId(UUID id);
+    Subscription findByCreatorIdAndSubscriberId(UUID creatorId, UUID readerId);
+
 }

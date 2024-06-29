@@ -17,7 +17,9 @@ import fyodor.dev.coremicroservice.rest.mapper.PostMapper;
 import fyodor.dev.coremicroservice.rest.mapper.SubscriptionMapper;
 import fyodor.dev.coremicroservice.service.PostService;
 import fyodor.dev.coremicroservice.service.SubscriptionService;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,14 +32,20 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SubscriptionFacadeService {
 
-    private final SubscriptionRepository subscriptionRepository;
-    private final UserRepository userRepository;
-    private final SubscriptionMapper subscriptionMapper;
-    private final PostMapper postMapper;
-    private final SubscriptionService subscriptionService;
-    private final PostService postService;
+    SubscriptionRepository subscriptionRepository;
+    UserRepository userRepository;
+    SubscriptionMapper subscriptionMapper;
+    PostMapper postMapper;
+    SubscriptionService subscriptionService;
+    PostService postService;
+
+    // TODO [26.06.2024]: ?
+    public boolean hasValidSubscription(UUID creatorId, UUID readerId) {
+        return subscriptionService.hasValidSubscription(creatorId, readerId);
+    }
 
     @Transactional
     public SubscriptionDto createSubscription(String userLogin, CreateSubscriptionRequest createSubscriptionRequest) {

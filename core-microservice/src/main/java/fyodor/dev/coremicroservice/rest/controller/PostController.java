@@ -5,7 +5,9 @@ import fyodor.dev.coremicroservice.service.facade.PostFacadeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,16 +18,12 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/api/v1/core/crud/posts")
 @Tag(name="PostController", description="Основная лента пользователя")
 public class PostController {
 
-    private final PostFacadeService postFacadeService;
-
-    @GetMapping("/ping")
-    public String ping() {
-        return "OK";
-    }
+    PostFacadeService postFacadeService;
 
     @GetMapping("/feed")
     @Operation(summary = "Получение полной информации ленты", description = "Получение полной информации по ленте для пользователя")

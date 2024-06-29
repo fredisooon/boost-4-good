@@ -68,7 +68,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public RegisteredUser registration(final UserDto userDto) {
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        userDto.setRoles(new HashSet<>(Collections.singleton(Role.ROLE_USER)));
+        userDto.setRoles(new HashSet<>(Collections.singleton(Role.USER)));
 
         HttpEntity<UserDto> request = new HttpEntity<>(userDto);
         ResponseEntity<UserDto> response = restTemplate.exchange(linkProperties.getUserServiceLink(),

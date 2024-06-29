@@ -6,7 +6,6 @@ import fyodor.dev.coremicroservice.service.PostService;
 import fyodor.dev.coremicroservice.service.ProfileImageService;
 import fyodor.dev.coremicroservice.service.UserService;
 import io.github.cdimascio.dotenv.Dotenv;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
