@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -12,8 +13,11 @@ import java.util.UUID;
 public class CreateSubscriptionRequest {
 
     UUID creatorId;
+    UUID subscriberId;
     UUID subscriptionDefinitionId;
     SubscriptionType type;
+    LocalDateTime startDate;
+    LocalDateTime endDate;
     Integer cost;
     Integer period;
 }
