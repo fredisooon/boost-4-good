@@ -14,4 +14,7 @@ public class UpdatePostRequest {
     String title;
     String content;
     List<UUID> imageIds;
+    Integer commentCount;
+    Integer likeCount;
+    Integer dislikeCount;
 }

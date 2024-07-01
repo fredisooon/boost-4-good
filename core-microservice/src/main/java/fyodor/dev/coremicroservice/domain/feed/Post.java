@@ -37,6 +37,15 @@ public class Post {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    @Column(name = "comment_count", nullable = false)
+    private Integer commentCount = 0;
+
+    @Column(name = "like_count", nullable = false)
+    private Integer likeCount = 0;
+
+    @Column(name = "dislike_count", nullable = false)
+    private Integer dislikeCount = 0;
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Reaction> reactions = new HashSet<>();
 

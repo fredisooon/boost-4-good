@@ -14,6 +14,7 @@ public class SubscriptionDto {
 
     UUID id;
     UUID creatorId;
+    String creatorName;
     UUID subscriberId;
     UUID subscriptionDefinitionId;
     SubscriptionType type;

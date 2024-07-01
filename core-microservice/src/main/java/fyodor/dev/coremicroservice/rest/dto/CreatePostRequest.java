@@ -17,4 +17,7 @@ public class CreatePostRequest {
     UUID subscriptionId;
     UUID creatorId;
     List<UUID> imageIds;
+    Integer commentCount;
+    Integer likeCount;
+    Integer dislikeCount;
 }

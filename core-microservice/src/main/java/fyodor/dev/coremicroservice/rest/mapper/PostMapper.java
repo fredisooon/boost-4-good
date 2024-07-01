@@ -16,14 +16,23 @@ public interface PostMapper {
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "subscription.id", source = "subscriptionId")
     @Mapping(target = "user.id", source = "creatorId")
+    @Mapping(target = "commentCount", source = "commentCount")
+    @Mapping(target = "likeCount", source = "likeCount")
+    @Mapping(target = "dislikeCount", source = "dislikeCount")
     Post toEntity(CreatePostRequest request);
 
     @Mapping(target = "subscriptionId", source = "subscription.id")
     @Mapping(target = "creatorId", source = "user.id")
+    @Mapping(target = "commentCount", source = "commentCount")
+    @Mapping(target = "likeCount", source = "likeCount")
+    @Mapping(target = "dislikeCount", source = "dislikeCount")
     PostDto toDto(Post post);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "commentCount", source = "commentCount")
+    @Mapping(target = "likeCount", source = "likeCount")
+    @Mapping(target = "dislikeCount", source = "dislikeCount")
     void updatePostFromDto(UpdatePostRequest request, @MappingTarget Post post);
 }
