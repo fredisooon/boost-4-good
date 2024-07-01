@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -104,6 +105,11 @@ public class PostFacadeService {
         List<Subscription> subscriptions = subscriptionRepository.findAllBySubscriberUsername(userLogin);
         List<Post> feedPosts = new ArrayList<>();
         for (Subscription subscription : subscriptions) {
+            UUID creatorId = subscription.getCreator().getId();
+            User user = userRepository.findById(creatorId)
+                    .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+            subscription.setCreatorName(user.getName());
+
             UUID subId = subscription.getId();
             List<Post> postsBySubscription = postService.getPostsBySubscription(subId);
             if (onlyAllowed) {

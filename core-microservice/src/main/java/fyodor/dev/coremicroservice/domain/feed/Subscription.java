@@ -23,6 +23,9 @@ public class Subscription {
     @JoinColumn(name = "user_creator_id", nullable = false)
     private User creator;
 
+    @Column(name = "creator_name")
+    private String creatorName;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_subscriber_id", nullable = false)
     private User subscriber;

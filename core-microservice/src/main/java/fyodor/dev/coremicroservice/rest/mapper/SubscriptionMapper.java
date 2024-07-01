@@ -14,15 +14,18 @@ public interface SubscriptionMapper {
     @Mapping(source = "creator.id", target = "creatorId")
     @Mapping(source = "subscriber.id", target = "subscriberId")
     @Mapping(source = "subscriptionDefinition.id", target = "subscriptionDefinitionId")
+    @Mapping(target = "creatorName", source = "creatorName")
     SubscriptionDto toDto(Subscription subscription);
 
     @Mapping(target = "creator.id", source = "creatorId")
     @Mapping(target = "subscriber.id", source = "subscriberId")
     @Mapping(target = "subscriptionDefinition.id", source = "subscriptionDefinitionId")
+    @Mapping(target = "creatorName", source = "creatorName")
     Subscription toEntity(CreateSubscriptionRequest request);
 
     @Mapping(target = "creator.id", source = "creatorId")
     @Mapping(target = "subscriber.id", source = "subscriberId")
     @Mapping(target = "subscriptionDefinition.id", source = "subscriptionDefinitionId")
+    @Mapping(target = "creatorName", source = "creatorName")
     void updateEntity(UpdateSubscriptionRequest request, @MappingTarget Subscription subscription);
 }

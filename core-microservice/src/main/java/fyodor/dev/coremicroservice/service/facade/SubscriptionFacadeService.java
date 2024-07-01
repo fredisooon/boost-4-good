@@ -1,15 +1,11 @@
 package fyodor.dev.coremicroservice.service.facade;
 
-import fyodor.dev.coremicroservice.domain.feed.Post;
 import fyodor.dev.coremicroservice.domain.feed.Subscription;
 import fyodor.dev.coremicroservice.domain.exception.ResourceNotFoundException;
 import fyodor.dev.coremicroservice.domain.exception.UnauthorizedException;
-import fyodor.dev.coremicroservice.domain.feed.SubscriptionType;
 import fyodor.dev.coremicroservice.domain.user.User;
 import fyodor.dev.coremicroservice.repository.SubscriptionRepository;
 import fyodor.dev.coremicroservice.repository.UserRepository;
-import fyodor.dev.coremicroservice.rest.dto.FeedDataDto;
-import fyodor.dev.coremicroservice.rest.dto.PostDto;
 import fyodor.dev.coremicroservice.rest.dto.SubscriptionDto;
 import fyodor.dev.coremicroservice.rest.dto.request.CreateSubscriptionRequest;
 import fyodor.dev.coremicroservice.rest.dto.request.UpdateSubscriptionRequest;
@@ -24,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -38,11 +33,8 @@ public class SubscriptionFacadeService {
     SubscriptionRepository subscriptionRepository;
     UserRepository userRepository;
     SubscriptionMapper subscriptionMapper;
-    PostMapper postMapper;
     SubscriptionService subscriptionService;
-    PostService postService;
 
-    // TODO [26.06.2024]: ?
     public boolean hasValidSubscription(UUID creatorId, UUID readerId) {
         return subscriptionService.hasValidSubscription(creatorId, readerId);
     }
@@ -103,40 +95,5 @@ public class SubscriptionFacadeService {
         return subscriptions.stream()
                 .map(subscriptionMapper::toDto)
                 .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public FeedDataDto getFeed(UUID userId, Integer limit, Integer commentsLimit, Boolean onlyAllowed) {
-        List<Subscription> subscriptions = subscriptionRepository.findAllBySubscriberId(userId);
-        List<Post> feedPosts = new ArrayList<>();
-        for (Subscription subscription : subscriptions) {
-            UUID subId = subscription.getId();
-            List<Post> postsBySubscription = postService.getPostsBySubscription(subId);
-            if (onlyAllowed) {
-                postsBySubscription = postsBySubscription.stream()
-                        .filter(post -> subscription.getType() == SubscriptionType.TRACKING ||
-                                post.getSubscription().getSubscriptionDefinition().getLevel().ordinal() <=
-                                        subscription.getSubscriptionDefinition().getLevel().ordinal())
-                        .toList();
-            }
-            feedPosts.addAll(postsBySubscription);
-        }
-        feedPosts = feedPosts.stream()
-                .sorted((p1, p2) -> p2.getCreatedAt().compareTo(p1.getCreatedAt()))
-                .limit(limit)
-                .collect(Collectors.toList());
-
-        List<PostDto> postDtos = feedPosts.stream()
-                .map(postMapper::toDto)
-                .collect(Collectors.toList());
-
-        List<SubscriptionDto> subscriptionDtos = subscriptions.stream()
-                .map(subscriptionMapper::toDto)
-                .collect(Collectors.toList());
-
-        FeedDataDto feedDataDto = new FeedDataDto();
-        feedDataDto.setPosts(postDtos);
-        feedDataDto.setBlogs(subscriptionDtos);
-        return feedDataDto;
     }
 }

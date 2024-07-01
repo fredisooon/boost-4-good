@@ -19,5 +19,8 @@ public class PostDto {
     UUID creatorId;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
+    Integer commentCount;
+    Integer likeCount;
+    Integer dislikeCount;
     List<ImageDto> images;
 }
