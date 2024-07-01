@@ -13,6 +13,7 @@ import java.util.UUID;
 public class CreateSubscriptionRequest {
 
     UUID creatorId;
+    String creatorName;
     UUID subscriberId;
     UUID subscriptionDefinitionId;
     SubscriptionType type;
